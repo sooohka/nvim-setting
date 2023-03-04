@@ -33,25 +33,6 @@ mason.setup({
 	},
 })
 
-masonLspconfig.setup({
-	ensure_installed = {
-		"bashls",
-		"cssls",
-		"dockerls",
-		"eslint",
-		"html",
-		"jsonls",
-		"lua_ls",
-		"pyright",
-		"rust_analyzer",
-		"tailwindcss",
-		"tsserver",
-		"vimls",
-		"yamlls",
-	},
-	automatic_installation = true,
-})
-
 local on_attach = function(client, bufnr)
 	-- Enable completion triggered by <c-x><c-o>
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -76,12 +57,44 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "<space>f", function()
 		vim.lsp.buf.format({ async = true })
 	end, bufopts)
+
+	--Highlight
+	if client.server_capabilities.documentHighlight then
+		vim.api.nvim_exec(
+			[[
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]],
+			false
+		)
+	end
 end
 
 local lsp_flags = {
 	debounce_text_changes = 150,
 }
 
+masonLspconfig.setup({
+	ensure_installed = {
+		"bashls",
+		"cssls",
+		"dockerls",
+		"eslint",
+		"html",
+		"jsonls",
+		"lua_ls",
+		"pyright",
+		"rust_analyzer",
+		"tailwindcss",
+		"tsserver",
+		"vimls",
+		"yamlls",
+	},
+	automatic_installation = true,
+})
 masonLspconfig.setup_handlers({
 	function(server_name)
 		require("lspconfig")[server_name].setup({
@@ -106,10 +119,11 @@ masonLspconfig.setup_handlers({
 						-- Get the language server to recognize the `vim` global
 						globals = { "vim" },
 					},
-
 					workspace = {
 						-- Make the server aware of Neovim runtime files
-						library = vim.api.nvim_get_runtime_file("", true),
+						library = {
+							vim.api.nvim_get_runtime_file("", true),
+						},
 					},
 					-- Do not send telemetry data containing a randomized but unique identifier
 					telemetry = {
@@ -152,6 +166,7 @@ masonToolInstaller.setup({
 		"yaml-language-server",
 		"yamllint",
 	},
+
 	run_on_start = true,
 	debounce_hours = 24,
 })

@@ -15,7 +15,8 @@ local lsp_formatting = function(bufnr)
 		bufnr = bufnr,
 	})
 end
-null_ls.enable()
+
+
 null_ls.setup({
 	sources = {
 		formatting.stylua,
@@ -27,6 +28,7 @@ null_ls.setup({
 	},
 	autoStart = true,
 	on_attach = function(client, bufnr)
+		print(client)
 		if client.supports_method("textDocument/formatting") then
 			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 			vim.api.nvim_create_autocmd("BufWritePre", {

@@ -18,7 +18,8 @@ local function themes(use)
 	use("navarasu/onedark.nvim") -- theme
 	use({ "catppuccin/nvim", as = "catppuccin" })
 	use({ "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } })
-	use({ "nvim-tree/nvim-web-devicons", opt = true })
+	use({ "akinsho/bufferline.nvim", tag = "v3.*", requires = "nvim-tree/nvim-web-devicons" }) --buffer
+	use({ "nvim-tree/nvim-web-devicons" })
 end
 
 packer.startup(function(use)
@@ -30,24 +31,45 @@ packer.startup(function(use)
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"neovim/nvim-lspconfig",
 		"j-hui/fidget.nvim",
+		"jose-elias-alvarez/null-ls.nvim",
+		"jay-babu/mason-null-ls.nvim",
 	})
-	use({
-		"nvim-tree/nvim-tree.lua",
-		requires = {},
-	})
-	use("jose-elias-alvarez/null-ls.nvim")
+	use({ "nvim-tree/nvim-tree.lua" })
 	use("nvim-lua/plenary.nvim") --required
-	use("hrsh7th/nvim-cmp") -- Autocompletion plugin
-	use("hrsh7th/cmp-nvim-lsp") -- LSP source for nvim-cmp
-	use("saadparwaiz1/cmp_luasnip") -- Snippets source for nvim-cmp
-	use("L3MON4D3/LuaSnip") -- Snippets plugin
+	use({
+		"hrsh7th/nvim-cmp", -- Autocompletion plugin
+		"hrsh7th/cmp-buffer", -- buffer
+		"hrsh7th/cmp-path", -- path
+		"hrsh7th/cmp-cmdline", -- pcmdlinelugin
+		"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
+		"hrsh7th/cmp-nvim-lua", -- Lua source for nvim-cmp
+		"saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
+		"L3MON4D3/LuaSnip", -- Snippets plugin
+		"f3fora/cmp-spell",
+		"rafamadriz/friendly-snippets", -- 스니펫 추천
+		{
+			"zbirenbaum/copilot.lua",
+			cmd = "Copilot",
+			event = "InsertEnter",
+			config = function()
+				require("plugins/copilot").copilotSetup()
+			end,
+		},
+		{
+			"zbirenbaum/copilot-cmp",
+			after = { "copilot.lua" },
+			config = function()
+				require("plugins/copilot").copilotCmpSetup()
+			end,
+		},
+	})
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 	use({ "numToStr/Comment.nvim" }) --commenter
 	use({ "filipdutescu/renamer.nvim", branch = "master", requires = { { "nvim-lua/plenary.nvim" } } })
-	use({ "mg979/vim-visual-multi" })
+	use({ "mg979/vim-visual-multi" }) --multicursor
 	use({ "nvim-telescope/telescope.nvim", tag = "0.1.1", requires = { { "nvim-lua/plenary.nvim" } } })
-	use({ "akinsho/bufferline.nvim", tag = "v3.*", requires = "nvim-tree/nvim-web-devicons" }) --buffer
 	use({ "rcarriga/nvim-notify" }) --notify
+	use("folke/which-key.nvim")
 	use({
 		"akinsho/toggleterm.nvim",
 		tag = "*",
