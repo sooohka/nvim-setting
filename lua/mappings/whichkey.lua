@@ -89,7 +89,7 @@ whichkey.setup({
 })
 
 vim.o.timeout = true
-vim.o.timeoutlen = 200
+vim.o.timeoutlen = 300
 
 local g = vim.g
 
