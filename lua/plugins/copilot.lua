@@ -1,5 +1,4 @@
 local copilot = require("copilot")
-local copilot_cmp = require("copilot_cmp")
 
 local M = {}
 M.copilotSetup = function()
@@ -49,7 +48,7 @@ M.copilotSetup = function()
 end
 
 M.copilotCmpSetup = function()
-	copilot_cmp.setup({
+	require("copilot_cmp").setup({
 		formatters = {
 			label = require("copilot_cmp.format").format_label_text,
 			insert_text = require("copilot_cmp.format").format_insert_text,
