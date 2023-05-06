@@ -1,20 +1,9 @@
 local cmp = require("cmp")
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-local lspconfig = require("lspconfig")
 local luasnip = require("luasnip")
 
 vim.opt.completeopt = { "menuone", "longest", "preview" }
 vim.opt.spell = true
 vim.opt.spelllang = "en_us"
-
-local servers = { "bashls", "cssls", "dockerls", "html", "jsonls", "tsserver", "vimls", "yamlls" }
-
-for _, lsp in ipairs(servers) do
-	lspconfig[lsp].setup({
-		-- on_attach = my_custom_on_attach,
-		capabilities = capabilities,
-	})
-end
 
 local check_backspace = function()
 	local col = vim.fn.col(".") - 1
@@ -107,7 +96,6 @@ cmp.setup({
 				nvim_lua = "[Lua]",
 				nvim_lsp = "[Lsp]",
 				luasnip = "[Snippet]",
-				spell = "[Spell]",
 				buffer = "[Buffer]",
 				path = "[Path]",
 			})[entry.source.name]
@@ -115,15 +103,6 @@ cmp.setup({
 		end,
 	},
 	sources = {
-		{
-			name = "spell",
-			option = {
-				keep_all_entries = false,
-				enable_in_context = function()
-					return true
-				end,
-			},
-		},
 		{ name = "copilot" },
 		{ name = "nvim_lua" },
 		{ name = "nvim_lsp" },

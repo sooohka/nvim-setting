@@ -3,6 +3,7 @@ local null_ls = require("null-ls")
 local formatting = null_ls.builtins.formatting
 local completion = null_ls.builtins.completion
 local diagnostics = null_ls.builtins.diagnostics
+local hover = null_ls.builtins.hover
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
@@ -15,8 +16,6 @@ local lsp_formatting = function(bufnr)
 		bufnr = bufnr,
 	})
 end
-
-
 null_ls.setup({
 	sources = {
 		formatting.stylua,
@@ -24,7 +23,9 @@ null_ls.setup({
 		formatting.prettier,
 		completion.spell,
 		diagnostics.eslint_d,
-		diagnostics.shellcheck, -- shell script diagnostics
+		diagnostics.zsh,
+		hover.dictionary,
+		hover.printenv,
 	},
 	autoStart = true,
 	on_attach = function(client, bufnr)

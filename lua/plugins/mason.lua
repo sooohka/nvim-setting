@@ -79,7 +79,6 @@ local lsp_flags = {
 
 masonLspconfig.setup({
 	ensure_installed = {
-		"bashls",
 		"cssls",
 		"dockerls",
 		"eslint",
@@ -141,7 +140,7 @@ masonLspconfig.setup_handlers({
 masonToolInstaller.setup({
 	ensure_installed = {
 		"actionlint",
-		"bash-language-server",
+		"bashls",
 		"beautysh",
 		"black",
 		"commitlint",
@@ -157,7 +156,6 @@ masonToolInstaller.setup({
 		"pylint",
 		"pyright",
 		"rust-analyzer",
-		"shellcheck",
 		"shfmt",
 		"stylua",
 		"tailwindcss-language-server",
