@@ -154,7 +154,6 @@ masonToolInstaller.setup({
 		"nginx-language-server",
 		"prettier",
 		"pylint",
-		"pyright",
 		"rust-analyzer",
 		"shfmt",
 		"stylua",
