@@ -1,7 +1,7 @@
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lspconfig = require("lspconfig")
 
-local servers = { "bashls", "cssls", "dockerls", "html", "jsonls", "tsserver", "vimls", "yamlls" }
+local servers = { "cssls", "dockerls", "html", "jsonls", "tsserver", "vimls", "yamlls" }
 
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({

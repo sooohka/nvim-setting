@@ -1,9 +1,6 @@
-local null_ls = require("null-ls")
+local null_ls =   require("null-ls")
 
-local formatting = null_ls.builtins.formatting
-local completion = null_ls.builtins.completion
-local diagnostics = null_ls.builtins.diagnostics
-local hover = null_ls.builtins.hover
+
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
@@ -18,18 +15,16 @@ local lsp_formatting = function(bufnr)
 end
 null_ls.setup({
 	sources = {
-		formatting.stylua,
-		formatting.shfmt,
-		formatting.prettier,
-		completion.spell,
-		diagnostics.eslint_d,
-		diagnostics.zsh,
-		hover.dictionary,
-		hover.printenv,
+		require("null-ls").builtins.formatting.shfmt,
+		require("null-ls").builtins.formatting.prettier,
+		require("null-ls").builtins.completion.spell,
+		require("null-ls").builtins.diagnostics.eslint_d,
+		require("null-ls").builtins.diagnostics.zsh,
+		require("null-ls").builtins.hover.dictionary,
+		require("null-ls").builtins.hover.printenv,
 	},
 	autoStart = true,
 	on_attach = function(client, bufnr)
-		print(client)
 		if client.supports_method("textDocument/formatting") then
 			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 			vim.api.nvim_create_autocmd("BufWritePre", {
