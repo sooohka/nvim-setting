@@ -1,7 +1,6 @@
 local null_ls =   require("null-ls")
 
 
-
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 local lsp_formatting = function(bufnr)
